@@ -10,7 +10,7 @@ En este documento se describirán las características del proyecto de fin de gr
     
     Este proyecto será una página web hecha con WordPress a pedido de un cliente, por tanto, no solo se trabajará el apartado de trabajo con herramientas vistas en el grado, sino que también se ganará experiencia a la hora de trabajar con clientes reales y relacionarme con un entorno de trabajo real.
     
-    La idea del proyecto es realizar una pagina web que sea bonita, intuitiva, funcional y cómoda tanto para los usuarios como para el cliente que la solicita. Dicha web dispondrá de todos los apartados informativos que ha nombrado el cliente además de una tienda web.
+    La idea del proyecto es realizar una página web que sea bonita, intuitiva, funcional y cómoda tanto para los usuarios como para el cliente que la solicita. Dicha web dispondrá de todos los apartados informativos que ha nombrado el cliente además de una tienda web.
     
     Dichos apartados son los siguientes:
     
