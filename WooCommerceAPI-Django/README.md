@@ -171,13 +171,13 @@ A continuación se encuentra la documentación del proyecto entregado. En concre
     
     En este documento se encuentra todo lo relacionado con el código del proyecto
     
-    [Panel de Administración para WooCommerce](Hotel%20MiMascota%20f7fff2e00c244ec5ad14416ec3ab3e5f/Panel%20de%20Administracio%CC%81n%20para%20WooCommerce%204c4e3cf1e0864fb3ab1c0993dfd4eedc.md)
+    [Panel de Administración para WooCommerce]([Hotel%20MiMascota%20f7fff2e00c244ec5ad14416ec3ab3e5f/Panel%20de%20Administracio%CC%81n%20para%20WooCommerce%204c4e3cf1e0864fb3ab1c0993dfd4eedc.md](https://www.notion.so/lruizap/Panel-de-Administraci-n-para-WooCommerce-4c4e3cf1e0864fb3ab1c0993dfd4eedc?pvs=4))
     
 2. WordPress
     
     En este apartado tengo la guía de usuario del WordPress junto con la guía de estilos y de plugins del mismo
     
-    [Guía de Usuario](Hotel%20MiMascota%20f7fff2e00c244ec5ad14416ec3ab3e5f/Gui%CC%81a%20de%20Usuario%20e39df334cf96419997419b7c9de68b15.md)
+    [Guía de Usuario]([Hotel%20MiMascota%20f7fff2e00c244ec5ad14416ec3ab3e5f/Gui%CC%81a%20de%20Usuario%20e39df334cf96419997419b7c9de68b15.md](https://www.notion.so/lruizap/Gu-a-de-Usuario-e39df334cf96419997419b7c9de68b15?pvs=4))
     
 
 ## Manejo de Errores
