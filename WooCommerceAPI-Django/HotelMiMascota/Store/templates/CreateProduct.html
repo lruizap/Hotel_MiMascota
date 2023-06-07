@@ -1,0 +1,182 @@
+{% extends 'base.html' %} {% load static %} {% load cloudinary %} {% block content %}
+
+<script defer src="{% static 'script/price-imputs.js' %}"></script>
+<script defer src="{% static 'script/tags-categories.js' %}"></script>
+<script defer src="{% static 'script/img.js' %}"></script>
+<script defer src="{% static 'script/dataProcessing-2.js' %}"></script>
+<script defer src="{% static 'script/alerts.js' %}"></script>
+
+<form
+  id="form_createProduct"
+  action="/createProduct"
+  method="POST"
+  enctype="multipart/form-data"
+  class="max-w-2xl h-screen mx-auto m-10 bg-white rounded-lg shadow-xl p-6 m-5"
+>
+  {% csrf_token %}
+
+  <h1 class="mb-5 py-5">
+    <a href="{{product.permalink}}" target="_blank">
+      <span
+        class="MiMascotaTitle mb-5 text-2xl font-bold tracking-tight hover:decoration-blue-500 hover:underline"
+        >Nuevo Producto</span
+      >
+    </a>
+  </h1>
+
+  <label>
+    <h1 class="block font-medium text-gray-700 text-lg mb-3">
+      Nombre del Producto
+    </h1>
+    <p class="validText hidden text-red-500 mb-5">
+      Comprueba que has introducido los datos
+    </p>
+    <input
+      name="productName"
+      class="input_ProductName border border-gray-400 mb-5 pl-5 p-2 rounded-lg w-full focus:outline-none focus:ring focus:border-blue-500"
+      placeholder="Introduzca el nombre del producto"
+      value=""
+      type="text"
+    />
+  </label>
+
+  <label>
+    <h1 class="block font-medium text-gray-700 text-lg mb-3">
+      Descripción del Producto
+    </h1>
+    <p class="validText hidden text-red-500 mb-5">
+      Comprueba que has introducido los datos
+    </p>
+    <textarea
+      class="input_ProductDescription border border-gray-400 mb-5 pl-5 p-2 rounded-lg w-full focus:outline-none focus:ring focus:border-blue-500"
+      placeholder="Introduzca una descripción para el producto"
+      rows="4"
+      cols="50"
+    ></textarea>
+  </label>
+
+  <label>
+    <h1 class="block font-medium text-gray-700 text-lg mb-3">
+      Precio del Producto
+    </h1>
+    <div class="input_ProductPriceVariable">
+      <p class="validText hidden text-red-500 mb-5">
+        Comprueba que has introducido los datos
+      </p>
+    </div>
+  </label>
+  <div hidden class="hiddenPrice">{{product.price_html|striptags}}</div>
+
+  <div class="grid grid-cols-2">
+    <div class="WP_categories mb-5">
+      <h1 class="block font-medium text-gray-700 text-lg mb-3">
+        Categorias del Producto
+      </h1>
+
+      {% for categorie in categories %}
+
+      <label>
+        <ul class="categorie_ul">
+          <input
+            class="input_ProductCategorie dataForm categorie_checkbox ml-5 tag_checkbox form-checkbox h-5 w-5 text-blue-600"
+            type="checkbox"
+            name="categorie{{categorie.id}}"
+            id="categorie{{categorie.id}}"
+          />
+          <span class="categorie_name">{{categorie.name}}</span>
+        </ul>
+      </label>
+
+      {% endfor %}
+
+      <div hidden class="categoriesHidden">
+        {% for productCategories in product.categories %}
+        {{productCategories.id}} {% endfor %}
+      </div>
+    </div>
+
+    <div class="WP_tags mb-5">
+      <h1 class="block font-medium text-gray-700 text-lg mb-3">
+        Etiquetas del Producto
+      </h1>
+
+      {% for tag in tags %}
+
+      <label>
+        <ul class="tags_ul">
+          <input
+            class="input_ProductTags dataForm ml-5 tag_checkbox form-checkbox h-5 w-5 text-blue-600"
+            type="checkbox"
+            name="tag{{tag.id}}"
+            id="tag{{tag.id}}"
+          />
+          <span class="tag_name">{{tag.name}}</span>
+        </ul>
+      </label>
+
+      {% endfor %}
+
+      <div hidden class="tagsHidden">
+        {% for productTags in product.tags %} {{productTags.id}} {% endfor %}
+      </div>
+    </div>
+  </div>
+
+  <div class="mb-5">
+    <h1 class="block font-medium text-gray-700 text-lg mb-3">
+      Imágenes del Producto
+    </h1>
+    <div
+      class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 justify-items-center m-5"
+    >
+      {% for image in product.images %}
+      <div class="max-w-sm rounded-lg drop-shadow-xl">
+        <img
+          class="w-full rounded-lg"
+          src="{{ image.src }}"
+          alt="{{ product.name }}"
+        />
+      </div>
+      {% endfor %}
+    </div>
+
+    <label>
+      <h1 class="block font-medium text-gray-700 text-lg mb-3">
+        Subir Imágenes
+      </h1>
+
+      <input
+        name="images"
+        class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none"
+        id="imgDer"
+        type="file"
+        multiple
+      />
+      <p class="mt-1 text-sm text-gray-500" id="file_input_help">
+        SVG, PNG, JPG o WEBP.
+      </p>
+      <button
+        class="btn btn-primary ml-1 bg-blue-500 text-white px-4 py-2 rounded mt-4 mb-8"
+        type="button"
+        onclick="ProductNewImages()"
+      >
+        Mostrar Imágenes Seleccionadas
+      </button>
+      <div
+        class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 justify-items-center m-5"
+        id="NewImages"
+      ></div>
+    </label>
+  </div>
+
+  <input type="text" class="miPadre hidden" name="miPadre" value="" />
+
+  <button
+    onclick="CreateNewProduct()"
+    class="z-20 cursor-pointer inline-flex align-self-end justify-self-end items-center fixed bottom-20 right-10 lg:px-5 lg:py-4 lg:text-2xl px-3 py-2 text-sm font-medium text-center text-white bg-green-700 rounded-lg hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
+  >
+    Guardar
+  </button>
+</form>
+
+{% endblock %}

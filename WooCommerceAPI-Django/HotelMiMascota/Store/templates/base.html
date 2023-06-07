@@ -1,0 +1,240 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Hotel MiMascota</title>
+
+    <link
+      rel="icon"
+      type="image/x-icon"
+      href="{% static 'img/HotelMiMascota_Logo.ico' %}"
+    />
+
+    {% comment %} Tailwindcss {% endcomment %}
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp"></script>
+
+    {% comment %} Flowbite {% endcomment %}
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.5/flowbite.min.js"></script>
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.5/flowbite.min.css"
+      rel="stylesheet"
+    />
+
+    {% comment %} Alerts {% endcomment %}
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script defer src="{% static 'script/alerts.js' %}"></script>
+
+    {% comment %} Static Files {% endcomment %}
+
+    <link rel="stylesheet" href="{% static 'style/style.css' %}" />
+  </head>
+  <body
+    class="bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-blue-700 via-blue-800 to-gray-900"
+  >
+    {% comment %} NAV {% endcomment %}
+
+    <nav class="border-gray-200 shadow-xl bg-gray-900">
+      <div
+        class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4"
+      >
+        <a href="/" class="flex items-center">
+          <img
+            src="{% static 'img/HotelMiMascota_Logo.png' %}"
+            class="h-8 mr-3"
+            alt="Hotel MiMascota Logo"
+          />
+          <span
+            class="MiMascotaTitle self-center text-2xl font-semibold whitespace-nowrap text-white"
+            >Hotel MiMascota</span
+          >
+        </a>
+        <div class="flex md:order-2">
+          <button
+            data-collapse-toggle="navbar-search"
+            type="button"
+            class="inline-flex items-center p-2 text-sm rounded-lg md:hidden focus:outline-none focus:ring-2 text-gray-400 hover:bg-gray-700 focus:ring-gray-600"
+            aria-controls="navbar-search"
+            aria-expanded="false"
+          >
+            <span class="sr-only">Open menu</span>
+            <svg
+              class="w-6 h-6"
+              aria-hidden="true"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
+                clip-rule="evenodd"
+              ></path>
+            </svg>
+          </button>
+        </div>
+        <div
+          class="items-center justify-between hidden w-full md:flex md:w-auto md:order-1"
+          id="navbar-search"
+        >
+          <ul
+            class="flex flex-col p-4 md:p-0 mt-4 font-medium border rounded-lg md:flex-row md:space-x-8 md:mt-0 md:border-0 bg-gray-800 md:bg-gray-900 border-gray-700"
+          >
+            <li>
+              <a
+                href="/"
+                class="block py-2 pl-3 pr-4 rounded md:hover:bg-transparent md:p-0 md:hover:text-blue-500 text-white hover:bg-gray-700 hover:text-white md:hover:bg-transparent border-gray-700"
+                aria-current="page"
+                >Inicio</a
+              >
+            </li>
+            {% if user.is_authenticated %}
+            <li>
+              <a
+                onclick="LoadProducts()"
+                href="/products"
+                class="block py-2 pl-3 pr-4 rounded md:hover:bg-transparent md:p-0 md:hover:text-blue-500 text-white hover:bg-gray-700 hover:text-white md:hover:bg-transparent border-gray-700"
+                >Productos</a
+              >
+            </li>
+            <li>
+              <a
+                href="/crear-producto"
+                class="block py-2 pl-3 pr-4 rounded md:hover:bg-transparent md:p-0 md:hover:text-blue-500 text-white hover:bg-gray-700 hover:text-white md:hover:bg-transparent border-gray-700"
+                >Añadir un producto</a
+              >
+            </li>
+            <li>
+              <a
+                href="/logout/"
+                class="block py-2 pl-3 pr-4 rounded md:hover:bg-transparent md:p-0 md:hover:text-blue-500 text-white hover:bg-gray-700 hover:text-white md:hover:bg-transparent border-gray-700"
+                aria-current="page"
+                >Cerrar Sesión</a
+              >
+            </li>
+            {% else %}
+            <li>
+              <a
+                data-modal-target="authentication-modal"
+                data-modal-toggle="authentication-modal"
+                class="block py-2 pl-3 pr-4 rounded cursor-pointer md:hover:bg-transparent md:p-0 md:hover:text-blue-500 text-white hover:bg-gray-700 hover:text-white md:hover:bg-transparent border-gray-700"
+                aria-current="page"
+                >Iniciar Sesión</a
+              >
+            </li>
+            {% endif %}
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    {% comment %} Modal Login {% endcomment %}
+
+    <!-- Main modal -->
+    <div
+      id="authentication-modal"
+      tabindex="-1"
+      aria-hidden="true"
+      class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full"
+    >
+      <div class="relative w-full max-w-md max-h-full">
+        <!-- Modal content -->
+        <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+          <button
+            type="button"
+            class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white"
+            data-modal-hide="authentication-modal"
+          >
+            <svg
+              aria-hidden="true"
+              class="w-5 h-5"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                clip-rule="evenodd"
+              ></path>
+            </svg>
+            <span class="sr-only">Close modal</span>
+          </button>
+          <div class="px-6 py-6 lg:px-8">
+            <h3 class="mb-4 text-xl font-medium text-gray-900 dark:text-white">
+              Inicia Sesión
+            </h3>
+
+            {% comment %} Inicio De Sesión {% endcomment %}
+
+            <form class="space-y-6" action="/login/" method="POST">
+              {% csrf_token %}
+              <div>
+                <label
+                  for="email"
+                  class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                  >Usuario</label
+                >
+                <input
+                  type="text"
+                  name="username"
+                  id="username"
+                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                  placeholder="name@company.com"
+                  required
+                />
+              </div>
+              <div>
+                <label
+                  for="password"
+                  class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                  >Contraseña</label
+                >
+                <input
+                  type="password"
+                  name="password"
+                  id="password"
+                  placeholder="••••••••"
+                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                  required
+                />
+              </div>
+              <button
+                type="submit"
+                class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+              >
+                Inicia Sesión
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {% block content %} {% endblock %}
+
+    <footer
+      class="fixed bottom-0 w-full mx-auto shadow bg-gray-900 justify-center items-center"
+    >
+      <div
+        class="w-full mx-auto max-w-screen-xl p-4 flex justify-center items-center"
+      >
+        <span class="text-sm text-center text-gray-400"
+          >© 2023
+          <a
+            href="http://jmuprwj.cluster031.hosting.ovh.net/daw2215lucas/"
+            target="_blank"
+            class="hover:underline"
+            >Hotel MiMascota™</a
+          >
+        </span>
+      </div>
+    </footer>
+  </body>
+</html>

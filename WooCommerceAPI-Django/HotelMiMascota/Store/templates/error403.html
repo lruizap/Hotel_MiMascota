@@ -1,0 +1,85 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Hotel MiMascota</title>
+
+    <link
+      rel="icon"
+      type="image/x-icon"
+      href="{% static 'img/HotelMiMascota_Logo.ico' %}"
+    />
+
+    {% comment %} Tailwindcss {% endcomment %}
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp"></script>
+
+    {% comment %} Flowbite {% endcomment %}
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.5/flowbite.min.js"></script>
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.5/flowbite.min.css"
+      rel="stylesheet"
+    />
+
+    {% comment %} Alerts {% endcomment %}
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script defer src="{% static 'script/alerts.js' %}"></script>
+
+    {% comment %} Static Files {% endcomment %}
+
+    <link rel="stylesheet" href="{% static 'style/style.css' %}" />
+  </head>
+  <body
+    class="bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] h-screen from-blue-700 via-blue-800 to-gray-900"
+  >
+    <section
+      class="flex items-center h-full p-16 dark:bg-gray-900 dark:text-gray-100"
+    >
+      <div
+        class="container flex flex-col items-center justify-center px-5 mx-auto my-8"
+      >
+        <div class="max-w-md text-center">
+          <h2 class="mb-8 font-extrabold text-9xl dark:text-gray-600">
+            <span class="sr-only">Error</span>403
+          </h2>
+          <p class="text-2xl font-semibold md:text-3xl">
+            Lo siento, no tienes permiso para hacer la petición.
+          </p>
+          <p class="mt-4 mb-8 dark:text-gray-400">
+            Pero no te preocupes, puedes volver a la página de inicio.
+          </p>
+          <a
+            rel="noopener noreferrer"
+            href="/"
+            class="px-8 py-3 font-semibold rounded bg-blue-700 hover:bg-blue-900"
+            >Inicio</a
+          >
+        </div>
+      </div>
+    </section>
+
+    <footer
+      class="fixed bottom-0 w-full mx-auto shadow bg-gray-900 justify-center items-center"
+    >
+      <div
+        class="w-full mx-auto max-w-screen-xl p-4 flex justify-center items-center"
+      >
+        <span class="text-sm text-center text-gray-400"
+          >© 2023
+          <a
+            href="http://jmuprwj.cluster031.hosting.ovh.net/daw2215lucas/"
+            target="_blank"
+            class="hover:underline"
+            >Hotel MiMascota™</a
+          >
+        </span>
+      </div>
+    </footer>
+  </body>
+</html>

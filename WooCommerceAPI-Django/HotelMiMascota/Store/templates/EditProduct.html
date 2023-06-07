@@ -1,0 +1,278 @@
+{% extends 'base.html' %} {% load static %} {% load cloudinary %} {% block content %}
+
+<script defer src="{% static 'script/price-imputs.js' %}"></script>
+<script defer src="{% static 'script/tags-categories.js' %}"></script>
+<script defer src="{% static 'script/img.js' %}"></script>
+<script defer src="{% static 'script/dataProcessing.js' %}"></script>
+<script defer src="{% static 'script/alerts.js' %}"></script>
+
+<form
+  id="form_editProduct"
+  action="/updateProduct"
+  method="POST"
+  enctype="multipart/form-data"
+  class="max-w-2xl mx-auto m-10 bg-white rounded-lg shadow-xl p-6 m-5"
+>
+  {% csrf_token %}
+
+  <h1 class="mb-5 py-5">
+    <a href="{{product.permalink}}" target="_blank">
+      <span
+        class="MiMascotaTitle mb-5 text-2xl font-bold tracking-tight hover:decoration-blue-500 hover:underline"
+        >{{product.name}}</span
+      >
+    </a>
+  </h1>
+
+  <label>
+    <h1 class="block font-medium text-gray-700 text-lg mb-3">
+      Nombre del Producto
+    </h1>
+    <p class="validText hidden text-red-500 mb-5">
+      Comprueba que has introducido los datos
+    </p>
+    <input
+      name="productName"
+      class="input_ProductName border border-gray-400 mb-5 pl-5 p-2 rounded-lg w-full focus:outline-none focus:ring focus:border-blue-500"
+      placeholder="{{product.name}}"
+      value="{{product.name}}"
+      type="text"
+      id="Name{{product.id}}"
+    />
+  </label>
+
+  <label>
+    <h1 class="block font-medium text-gray-700 text-lg mb-3">
+      Descripción del Producto
+    </h1>
+    <p class="validText hidden text-red-500 mb-5">
+      Comprueba que has introducido los datos
+    </p>
+    <textarea
+      class="input_ProductDescription border border-gray-400 mb-5 pl-5 p-2 rounded-lg w-full focus:outline-none focus:ring focus:border-blue-500"
+      placeholder="{{product.description|striptags}}"
+      id="Description{{product.id}}"
+      rows="4"
+      cols="50"
+    >
+    {{product.description|striptags}}</textarea
+    >
+  </label>
+
+  <label>
+    <h1 class="block font-medium text-gray-700 text-lg mb-3">
+      Precio del Producto
+    </h1>
+    <div class="input_ProductPriceVariable">
+      <p class="validText hidden text-red-500 mb-5">
+        Comprueba que has introducido los datos
+      </p>
+    </div>
+  </label>
+  <div hidden class="hiddenPrice">{{product.price_html|striptags}}</div>
+
+  <div class="grid grid-cols-2">
+    <div class="WP_categories mb-5">
+      <h1 class="block font-medium text-gray-700 text-lg mb-3">
+        Categorias del Producto
+      </h1>
+
+      {% for categorie in categories %}
+
+      <label>
+        <ul class="categorie_ul">
+          <input
+            class="input_ProductCategorie dataForm categorie_checkbox ml-5 tag_checkbox form-checkbox h-5 w-5 text-blue-600"
+            type="checkbox"
+            name="categorie{{categorie.id}}"
+            id="categorie{{categorie.id}}"
+          />
+          <span class="categorie_name">{{categorie.name}}</span>
+        </ul>
+      </label>
+
+      {% endfor %}
+
+      <div hidden class="categoriesHidden">
+        {% for productCategories in product.categories %}
+        {{productCategories.id}} {% endfor %}
+      </div>
+    </div>
+
+    <div class="WP_tags mb-5">
+      <h1 class="block font-medium text-gray-700 text-lg mb-3">
+        Etiquetas del Producto
+      </h1>
+
+      {% for tag in tags %}
+
+      <label>
+        <ul class="tags_ul">
+          <input
+            class="input_ProductTags dataForm ml-5 tag_checkbox form-checkbox h-5 w-5 text-blue-600"
+            type="checkbox"
+            name="tag{{tag.id}}"
+            id="tag{{tag.id}}"
+          />
+          <span class="tag_name">{{tag.name}}</span>
+        </ul>
+      </label>
+
+      {% endfor %}
+
+      <div hidden class="tagsHidden">
+        {% for productTags in product.tags %} {{productTags.id}} {% endfor %}
+      </div>
+    </div>
+  </div>
+
+  <div class="mb-5">
+    <h1 class="block font-medium text-gray-700 text-lg mb-3">
+      Imágenes del Producto
+    </h1>
+    <div
+      class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 justify-items-center m-5"
+    >
+      {% for image in product.images %}
+      <div class="max-w-sm rounded-lg drop-shadow-xl">
+        <img
+          class="w-full rounded-lg"
+          src="{{ image.src }}"
+          alt="{{ product.name }}"
+        />
+      </div>
+      {% endfor %}
+    </div>
+
+    <label>
+      <h1 class="block font-medium text-gray-700 text-lg mb-3">
+        Subir Imágenes
+      </h1>
+
+      <input
+        name="images"
+        class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none"
+        id="imgDer"
+        type="file"
+        multiple
+      />
+      <p class="mt-1 text-sm text-gray-500" id="file_input_help">
+        SVG, PNG, JPG o WEBP.
+      </p>
+      <button
+        class="btn btn-primary ml-1 bg-blue-500 text-white px-4 py-2 rounded mt-4 mb-8"
+        type="button"
+        onclick="ProductNewImages()"
+      >
+        Mostrar Imágenes Seleccionadas
+      </button>
+      <div
+        class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 justify-items-center m-5"
+        id="NewImages"
+      ></div>
+    </label>
+  </div>
+
+  <input
+    type="text"
+    class="id hidden"
+    name="ProductID"
+    value="{{product.id}}"
+  />
+  <input type="text" class="miPadre hidden" name="miPadre" value="" />
+
+  <button
+    onclick="EditProduct()"
+    class="z-20 cursor-pointer inline-flex align-self-end justify-self-end items-center fixed bottom-20 right-10 lg:px-5 lg:py-4 lg:text-2xl px-3 py-2 text-sm font-medium text-center text-white bg-green-700 rounded-lg hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
+  >
+    Guardar
+  </button>
+</form>
+
+<button
+  data-modal-target="popup-modal"
+  data-modal-toggle="popup-modal"
+  class="z-20 fixed cursor-pointer items-center text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 bottom-20 left-10 lg:px-5 lg:py-4 lg:text-2xl px-3 py-2 text-sm font-medium text-center rounded-lg dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800"
+  type="button"
+>
+  Eliminar
+</button>
+
+<div
+  id="popup-modal"
+  tabindex="-1"
+  class="fixed top-0 left-0 right-0 z-50 hidden p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full"
+>
+  <div class="relative w-full max-w-md max-h-full">
+    <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+      <button
+        type="button"
+        class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white"
+        data-modal-hide="popup-modal"
+      >
+        <svg
+          aria-hidden="true"
+          class="w-5 h-5"
+          fill="currentColor"
+          viewBox="0 0 20 20"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            fill-rule="evenodd"
+            d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+            clip-rule="evenodd"
+          ></path>
+        </svg>
+        <span class="sr-only">Close modal</span>
+      </button>
+
+      <form action="/deleteProduct" method="POST">
+        {% csrf_token %}
+        <div class="p-6 text-center">
+          <svg
+            aria-hidden="true"
+            class="mx-auto mb-4 text-gray-400 w-14 h-14 dark:text-gray-200"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+            ></path>
+          </svg>
+          <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
+            ¿Estás seguro de que quieres eliminar el producto?
+          </h3>
+
+          <input
+            type="text"
+            class="id hidden"
+            name="ProductID2"
+            value="{{product.id}}"
+          />
+
+          <button
+            onclick="DeleteProduct()"
+            class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center mr-2"
+          >
+            Si, Estoy seguro
+          </button>
+
+          <button
+            data-modal-hide="popup-modal"
+            type="button"
+            class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600"
+          >
+            No, cancelar
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

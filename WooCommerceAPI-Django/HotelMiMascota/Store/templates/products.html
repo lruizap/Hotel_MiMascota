@@ -1,0 +1,66 @@
+{% extends 'base.html'%} {% load static %} {% block content %}
+
+<script defer src="{% static 'script/price-tags.js' %}"></script>
+<script defer src="{% static 'script/alerts.js' %}"></script>
+
+<div
+  class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 justify-items-center m-5"
+>
+  {% for product in products %}
+  <div
+    class="max-w-sm bg-white border shadow-xl border-gray-200 rounded-lg drop-shadow-xl"
+  >
+    <a href="editar-producto/{{product.id}}">
+      {% for image in product.images %} {% if forloop.first %}
+      <img
+        class="w-full rounded-t-lg"
+        src="{{ image.src }}"
+        alt="{{ product.name }}"
+      />
+      {% endif %} {% endfor %}
+    </a>
+    <div class="mb-5 p-5 grid">
+      <a href="editar-producto/{{product.id}}">
+        <h5
+          class="MiMascotaTitle mb-2 text-2xl font-bold tracking-tight hover:decoration-blue-500 hover:underline"
+        >
+          {{product.name}}
+        </h5>
+      </a>
+      <p class="MiMascotaDescription mb-3 font-normal">
+        {{ product.description|striptags }}
+      </p>
+      <div class="px-6 pt-4 pb-2">
+        <span
+          id="price"
+          class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2"
+          >{{product.price_html|striptags}}</span
+        >
+      </div>
+    </div>
+    <div class="grid p-5">
+      <a
+        onclick="LoadProductData()"
+        href="editar-producto/{{product.id}}"
+        class="cursor-pointer inline-flex align-self-end justify-self-end items-center fixed bottom-10 right-10 px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+      >
+        Editar Producto
+        <svg
+          aria-hidden="true"
+          class="w-4 h-4 ml-2 -mr-1"
+          fill="currentColor"
+          viewBox="0 0 20 20"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            fill-rule="evenodd"
+            d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
+            clip-rule="evenodd"
+          ></path>
+        </svg>
+      </a>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% endblock %}
