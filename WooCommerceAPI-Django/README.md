@@ -1,6 +1,6 @@
 # [Hotel MiMascota](https://jmuprwj.cluster031.hosting.ovh.net/daw2215lucas/)
 
-# [Proyecto Integrado DAW](https://lruizap.notion.site/Hotel-MiMascota-f7fff2e00c244ec5ad14416ec3ab3e5f?pvs=4)
+# [Proyecto Integrado DAW]
 
 | Autor | Lucas Ruiz Zapata |
 | --- | --- |
@@ -37,8 +37,8 @@ La documentación del proyecto está dividida en varios puntos:
 3. Medios Necesarios
 4. Planificación
 5. Documentación del proyecto
-    - [Panel de Administración para WooCommerce](https://lruizap.notion.site/Panel-de-Administraci-n-para-WooCommerce-4c4e3cf1e0864fb3ab1c0993dfd4eedc?pvs=4)
-    - [Guía de Usuario](https://lruizap.notion.site/Gu-a-de-Usuario-e39df334cf96419997419b7c9de68b15?pvs=4)
+    - [Panel de Administración para WooCommerce]
+    - [Guía de Usuario]
 6. Manejo de Errores
 7. Bibliografía
 8. Conclusión 
@@ -171,13 +171,13 @@ A continuación se encuentra la documentación del proyecto entregado. En concre
     
     En este documento se encuentra todo lo relacionado con el código del proyecto
     
-    [Panel de Administración para WooCommerce](https://lruizap.notion.site/Panel-de-Administraci-n-para-WooCommerce-4c4e3cf1e0864fb3ab1c0993dfd4eedc?pvs=4)
+    [Panel de Administración para WooCommerce]
     
 2. WordPress
     
     En este apartado tengo la guía de usuario del WordPress junto con la guía de estilos y de plugins del mismo
     
-    [Guía de Usuario](https://lruizap.notion.site/Gu-a-de-Usuario-e39df334cf96419997419b7c9de68b15?pvs=4)
+    [Guía de Usuario]
     
 
 ## Manejo de Errores
@@ -275,11 +275,11 @@ Y el segundo es que gracias a la documentación de las APIs y a mis propios apun
 
 - Proyectos propios hechos con Django
     
-    [Django](https://www.notion.so/Django-9656f1a0539a40f1a07f46e041a0d45b?pvs=21) 
+    [Django]
     
-    [Django Apps](https://www.notion.so/Django-Apps-76ed77cc0dfe4609b0e7919c020a134b?pvs=21) 
+    [Django Apps]
     
-    [Django CRUD con Autenticación y Despliegue](https://www.notion.so/Django-CRUD-con-Autenticaci-n-y-Despliegue-c91c3dc313e9474c9b918bdb235e6d7d?pvs=21) 
+    [Django CRUD con Autenticación y Despliegue]
     
 - Documentación de Jinja
 
